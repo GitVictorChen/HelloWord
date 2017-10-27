@@ -1,0 +1,18 @@
+c:\users\12030005\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+c:\users\12030005\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+c:\users\12030005\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+c:\users\12030005\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+c:\users\12030005\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+c:\users\12030005\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+c:\users\12030005\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+c:\users\12030005\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+c:\users\12030005\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+D:\Program Files\Git\NewRep\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\Program Files\Git\NewRep\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+D:\Program Files\Git\NewRep\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+D:\Program Files\Git\NewRep\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+D:\Program Files\Git\NewRep\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+D:\Program Files\Git\NewRep\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+D:\Program Files\Git\NewRep\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+D:\Program Files\Git\NewRep\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\Program Files\Git\NewRep\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
