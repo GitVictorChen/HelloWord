@@ -1,0 +1,6 @@
+SELECT * FROM 
+(
+select * , lag(ActDate)over(partition by EmpNo order by ActDate ) AS NEW1 ,CASE WHEN DATEDIFF(MI,lag(ActDate)over(partition by EmpNo order by ActDate ),actdate) <30 THEN 0 ELSE 1 END AS FLAG from [CardDataTest] where actdate>'2020-08-04 0:58:30.000' 
+) t WHERE FLAG=1
+select * from (
+select empNo,actdate,ROW_NUMBER() OVER(PARTITION BY EmpNo ORDER BY ActDate) AS no1  from [CardDataTest]) as T pivot(max(actdate) for no1 in ([1],[2],[3],[4])) a
