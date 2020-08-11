@@ -4,3 +4,44 @@ select * , lag(ActDate)over(partition by EmpNo order by ActDate ) AS NEW1 ,CASE 
 ) t WHERE FLAG=1
 select * from (
 select empNo,actdate,ROW_NUMBER() OVER(PARTITION BY EmpNo ORDER BY ActDate) AS no1  from [CardDataTest]) as T pivot(max(actdate) for no1 in ([1],[2],[3],[4])) a
+            string str = null;
+
+            str = "WindowsFormsApp3.Form3";
+            //必须是 命名空间+点+窗体类名
+            System.Reflection.Assembly tempAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            Form frm2 = (Form)tempAssembly.CreateInstance(str);
+            frm2.MdiParent = this;
+            //frm2.TopLevel = false;
+            splitContainer3.Panel2.Controls.Add(frm2);
+            frm2.Show();
+          bool bExist = false;
+            string ss = this.Name;
+            for (int i = 0; i < splitContainer3.Panel2.Controls.Count; i++)
+            {
+
+                if (splitContainer3.Panel2.Controls[i].Name == "Form3")
+                {
+                    splitContainer3.Panel2.Controls[i].Visible = true;
+                    bExist = true;
+                }
+                else
+                {
+                    splitContainer3.Panel2.Controls[i].Visible=false;
+                }
+            }
+            if (bExist == false)
+            {
+                Form3 f3 = new Form3();
+                f3.MdiParent = this;
+                f3.TopLevel = false;
+                splitContainer3.Panel2.Controls.Add(f3);
+                f3.Show();
+
+            }
+
+DataRow inserDataRow = dataDt.NewRow();
+inserDataRow["Name"] = "王五";
+inserDataRow["Id"] = 23;
+inserDataRow["Memo"] = "第一行";
+ 
+dataDt.Rows.InsertAt(inserDataRow, 0);
