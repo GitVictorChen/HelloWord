@@ -45,3 +45,8 @@ inserDataRow["Id"] = 23;
 inserDataRow["Memo"] = "µÚÒ»ÐÐ";
  
 dataDt.Rows.InsertAt(inserDataRow, 0);
+for (int i = count -1; i >=0; i--)
+{ 
+ds.Tables[0].Rows.RemoveAt(i);
+}
+            string sql = "insert into DayscheduleTemp(KQDay,ScheduleId)values('2020-8-13','E13') insert into DayscheduleTemp(KQDay, ScheduleId)values('2020-8-14', 'E14')  delete PaiBanPerson from(SELECT EMPNo, KQDay FROM DayscheduleTemp, Employee ) T where EmpNo in() and PaiBanPerson.EmpNo = T.EmpNo and PaiBanPerson.KQDay = T.KQDay  INSERT INTO PaiBanPerson(EmpNo, KQDay, ScheduleID) SELECT EMPNo, KQDay, ScheduleID  FROM DayscheduleTemp, Employee where EmpNo in() delete from DayscheduleTemp";
