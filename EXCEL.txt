@@ -1,0 +1,76 @@
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Title = "导出Excel";
+            fileDialog.Filter = "Excel文件(*.xlsx)|*.xlsx";
+            DialogResult dialogResult = fileDialog.ShowDialog(this);
+            try
+            {
+                if (dialogResult == DialogResult.OK)
+                {
+                    
+                    DevExpress.XtraPrinting.XlsExportOptions options = new DevExpress.XtraPrinting.XlsExportOptions();
+                    gridControl1.ExportToXlsx(fileDialog.FileName);
+                    DevExpress.XtraEditors.XtraMessageBox.Show("保存成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            string filePath = "d:\\22.xlsx";
+            DataTable dt = new DataTable();
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = true;//该值确定是否可以选择多个文件
+            dialog.Title = "请选择文件夹";
+            dialog.Filter = "所有文件(*.xlsx)|*.xlsx";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                filePath = dialog.FileName;
+                Aspose.Cells.Workbook book = new Aspose.Cells.Workbook();
+                book.Open(filePath);
+                Aspose.Cells.Worksheet sheet = book.Worksheets[0];
+                Aspose.Cells.Cells  cells = sheet.Cells;
+                dt= cells.ExportDataTableAsString(0,0, cells.MaxDataRow + 1, 2, true);
+                sheet = null;
+                book = null;
+            }
+
+            string filePath = "d:\\22.xlsx";
+            DataTable dt = new DataTable();
+      
+                Aspose.Cells.Workbook book = new Aspose.Cells.Workbook();
+                book.Open(filePath);
+                Aspose.Cells.Worksheet sheet = book.Worksheets[0];
+                Aspose.Cells.Cells  cells = sheet.Cells;
+                dt= cells.ExportDataTableAsString(1,0, cells.MaxDataRow , 2,false);
+                dt.TableName="DataC";
+            dt.Columns["Column1"].ColumnName = "EmpNo";
+            dt.Columns["Column2"].ColumnName = "Dattiyme";
+            sheet = null;
+                book = null;
+
+            string filePath = "d:\\22.xlsx";
+            DataTable dt = new DataTable();
+            DateTime dtDate;
+                Aspose.Cells.Workbook book = new Aspose.Cells.Workbook();
+                book.Open(filePath);
+                Aspose.Cells.Worksheet sheet = book.Worksheets[0];
+                Aspose.Cells.Cells  cells = sheet.Cells;
+                dt= cells.ExportDataTableAsString(1,0, cells.MaxDataRow , 2,false);
+                dt.TableName="DataC";
+            dt.Columns["Column1"].ColumnName = "EmpNo";
+            dt.Columns["Column2"].ColumnName = "Dattiyme";
+            sheet = null;
+                book = null;
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                string strName = dt.Rows[i]["Column2"].ToString();
+                if (DateTime.TryParse(dt.Rows[i]["Column2"].ToString(), out dtDate))
+                {
+
+                }
+                else
+                {
+
+                }
+            }
