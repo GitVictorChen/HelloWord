@@ -1,0 +1,159 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Diagnostics;
+
+namespace WindowsFormsApp3
+{
+    public partial class Form3 : Form
+    {
+        DataTable dtTable;
+        public Form3()
+        {
+            InitializeComponent();
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+            //this.reportViewer1.RefreshReport();
+            string strSeekSql = "select * from NodeT ";
+            dtTable = SQLHelper.GetDataTable(strSeekSql);
+            gridControl1.DataSource = dtTable;
+
+            //treeList3.KeyFieldName = "KeyId";
+            //treeList3.ParentFieldName = "ParentId";
+            //treeList3.DataSource = ipdt;
+            //treeList3.Nodes[0].ImageIndex = 1;
+        }
+
+        private void treeList1_CustomDrawNodeImages(object sender, DevExpress.XtraTreeList.CustomDrawNodeImagesEventArgs e)
+        {
+            string t = e.Node.GetValue("KeyId").ToString();
+            if (t == "1")
+            { e.SelectImageIndex = 0; }
+            else
+            { e.SelectImageIndex = 1; }
+            //   e.SelectImageIndex = 0;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+
+ 
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = true;//该值确定是否可以选择多个文件
+            dialog.Title = "请选择文件夹";
+            dialog.Filter = "所有文件(*.xlsx)|*.xlsx";
+            string filePath = "";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                filePath = dialog.FileName;
+            }
+            string strSql = "";
+            DataTable dt = new DataTable();
+            DateTime dtDate;
+                Aspose.Cells.Workbook book = new Aspose.Cells.Workbook();
+                book.Open(filePath);
+                Aspose.Cells.Worksheet sheet = book.Worksheets[0];
+                Aspose.Cells.Cells  cells = sheet.Cells;
+                dt= cells.ExportDataTableAsString(1,0, cells.MaxDataRow , 2,false);
+                dt.TableName="DataC";
+            dt.Columns["Column1"].ColumnName = "EmpNo";
+            dt.Columns["Column2"].ColumnName = "CardDate";
+            sheet = null;
+                book = null;
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                string strName = dt.Rows[i]["CardDate"].ToString();
+                if (DateTime.TryParse(dt.Rows[i]["CardDate"].ToString(), out dtDate))
+                {
+                    strSql= strSql+" Insert into CardData(EmpNo,CardDate)values('" + dt.Rows[i]["EmpNo"].ToString()+"','"+ strName+"')";
+                }
+                else
+                {
+                    MessageBox.Show("第:"+(i+2).ToString()+ "行 " + dt.Rows[i]["CardDate"].ToString()+" 格式有问题，非时间格式。");
+                    return;
+                }
+            }
+            if (strSql != "")
+            {
+                SQLHelper.ExeSql(strSql);
+            }
+            //}
+
+
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string strSeekSql;
+            string strProjectPath = @"D:\Salary.xlsx";
+            string strSaveFileName = "";
+            int lRandomNumber = 0;
+
+            // try
+            //{
+   
+            strSeekSql = "select *,WorkHour+ExtraHour-LateHour-EarlyHour as RealTime from vwSalary ORDER BY EmpNo asc";
+            DataTable dtProject = SQLHelper.GetDataTable(strSeekSql);
+            Aspose.Cells.Workbook workbook = new Aspose.Cells.Workbook(strProjectPath);
+            //获取所有的模板信息，循环内做元素填充
+            Aspose.Cells.Worksheet worksheet = workbook.Worksheets[0];
+            Aspose.Cells.Cells cells = worksheet.Cells;//单元格 
+            for (int i = 1; i <= dtProject.Rows.Count; i++)
+            {
+                  //循环内处理每个元素值，包括填充到EXCEL表中。0行开始
+                worksheet.Cells[i+3,0].PutValue(dtProject.Rows[i - 1]["EmpNo"].ToString());
+                worksheet.Cells[i+3, 1].PutValue(dtProject.Rows[i - 1]["EmpName"].ToString());
+                worksheet.Cells[i+3, 2].PutValue(dtProject.Rows[i - 1]["FacName"].ToString());
+                worksheet.Cells[i+3, 3].PutValue(Convert.ToInt32(dtProject.Rows[i - 1]["StandardDay"])*11);
+                worksheet.Cells[i+3, 4].PutValue(dtProject.Rows[i - 1]["RealTime"].ToString());
+                worksheet.Cells[i+3, 5].PutValue(dtProject.Rows[i - 1]["LateTime"].ToString());
+                worksheet.Cells[i+3, 6].PutValue(dtProject.Rows[i - 1]["LateHour"].ToString());
+                worksheet.Cells[i+3, 7].PutValue(dtProject.Rows[i - 1]["EarlyTime"].ToString());
+                worksheet.Cells[i+3, 8].PutValue(dtProject.Rows[i - 1]["EarlyHour"].ToString());
+                worksheet.Cells[i+3, 9].PutValue(dtProject.Rows[i - 1]["ExtraHour"].ToString());
+                worksheet.Cells[i+3, 10].PutValue(dtProject.Rows[i - 1]["WorkDay"].ToString()+"/"+ dtProject.Rows[i - 1]["StandardDay"].ToString());
+                worksheet.Cells[i + 3, 11].PutValue(dtProject.Rows[i - 1]["KGDay"].ToString());
+                worksheet.Cells[i + 3, 12].PutValue(dtProject.Rows[i - 1]["QJDay"].ToString());
+                worksheet.Cells[i + 3, 14].PutValue(dtProject.Rows[i - 1]["QJDay"].ToString());
+            }
+            //保存文件到后台
+
+            //保存文件
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            //设置文件类型
+
+            saveFileDialog.Filter = "Excel Files (.xlsx)|*.xlsx";
+            //保存对话框是否记忆上次打开的目录
+            saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.FileName = "Salary";//+ strGModulePath.ToString().Substring(strGModulePath.ToString().Length - 4, 4).ToUpper();
+            DialogResult rDialogResult = saveFileDialog.ShowDialog();
+            //点了保存按钮进入
+
+            if (rDialogResult == System.Windows.Forms.DialogResult.OK)
+            {
+                //获得文件路径
+                try
+                {
+                    workbook.Save(saveFileDialog.FileName.ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("保存失败，请关闭当前EXCEL再试！");
+                }
+              
+                System.Diagnostics.Process.Start(saveFileDialog.FileName.ToString());
+            }
+        }
+    }
+}
