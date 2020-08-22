@@ -1,0 +1,32 @@
+USE [ProgramTest]
+GO
+
+/****** Object:  StoredProcedure [dbo].[CopyPB]    Script Date: 2020/08/22 11:47:04 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[CopyPB]
+@StartDay datetime,
+@EmpNo nvarchar(150)=NULL
+	-- Add the parameters for the stored procedure here
+AS
+BEGIN
+declare @ProceeDay date
+set @ProceeDay=@StartDay
+while(datediff(MM,@StartDay,@ProceeDay)=0)
+begin
+	DELETE FROM PaiBanPerson where EmpNo=@EmpNo and KQDay =@ProceeDay
+	INSERT INTO PaiBanPerson(EmpNo,KQDay,ScheduleID)select @EmpNo,@ProceeDay,min(ScheduleID) AS ScheduleID from(
+	select ScheduleID ,CASE WHEN DATEPART(DW,KQDay)=1 THEN 1 ELSE 0 END AS Sun from PaiBanPerson where datediff(MM,DATEADD(MM,-1,@StartDay),KQDay)=0 AND EmpNo =@EmpNo) T group by Sun having sun=CASE WHEN DATEPART(DW,@ProceeDay)=1 THEN 1 ELSE 0 END  
+	set @ProceeDay=dateadd(dd,1,@ProceeDay)	
+end
+	
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	
+END
+GO
+
+
